@@ -1,0 +1,5 @@
+[2020-04-19 16:59:08.127] [renderer1] [error] Error: Unable to read file '/home/will/.config/neomutt/neomuttrc' (Error: Unable to resolve non-existing file '/home/will/.config/neomutt/neomuttrc')
+    at Object.t.createErrorWithActions (file:///usr/share/vscodium-bin/resources/app/out/vs/workbench/workbench.desktop.main.js:53:573)
+    at e.handleSetInputError (file:///usr/share/vscodium-bin/resources/app/out/vs/workbench/workbench.desktop.main.js:5422:601)
+    at e.handleSetInputError (file:///usr/share/vscodium-bin/resources/app/out/vs/workbench/workbench.desktop.main.js:5425:428)
+    at e.setInput (file:///usr/share/vscodium-bin/resources/app/out/vs/workbench/workbench.desktop.main.js:5422:317)

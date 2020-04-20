@@ -1,0 +1,58 @@
+$  lf delete sxhkdrc.save
+$  delete
+$  cmd-delete
+$ lf delete
+$  lf delete
+$  nano bspwmrc
+$  nano bspwmrc
+$ nano bspwmrc
+$  nano bspwmrc
+$  rm .xsession-errors
+$  rm .xsession-errors.old
+$  rm city.jpg
+$  mkdir wallpapers
+$  rm -r spotify
+$  rm .calcurse.pid
+$  vscodium .xinitrc
+$  mkdir lf
+$  touch lfrc
+$  vim lfrc
+$  vscodium lfrc
+$  touch test
+$  delete
+$  touch test
+$  touch test
+: delete
+: delete
+$  neovim lfrc
+$  vim lfrc
+$  vscodium lfrc
+$  vim lfrc
+$  vim lfrc
+$  vim lfrc
+$  vim .zprofile
+$  touch .zshrc
+$ vim .zshrc
+$  vim
+$  vim
+$  vim zshrc
+$  vim .zshrc
+$  vim .zshrc
+$  vscodium willdisagree.zsh-theme
+$  mkdir neofetch
+$  rm -r browser-playerctl
+$  sudo rm -r browser-playerctl
+$  mkdir repos
+$  vim alacritty.yml
+$  vim lfrc
+$  vim .zshrc
+$ mkdir nvim
+$  touch init.vim
+$  sudo rm rstudio-gnome-light.qss
+$  cp ~/Documents/rstudio-gnome-light.qss /lib64/rstudio/resources/stylesheets/rstudio-gnome-dark.qss
+$  sudo mv ~/Documents/rstudio-gnome-light.qss /lib64/rstudio/resources/stylesheets/rstudio-gnome-light.qss
+$  zathura DirectLetter.pdf
+$  nvim pacman.conf
+$  sudo nvim pacman.conf
+$  mkdir mutt
+$  touch muttrc
