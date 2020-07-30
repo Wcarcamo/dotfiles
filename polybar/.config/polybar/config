@@ -1,0 +1,233 @@
+;--------;
+; COLORS ;
+;--------;
+[colors]
+background = #00000000
+foreground = #FFFFFF
+alert = #bd2c40
+pink = #E0AFCF
+skyBlue = #AFCFE0
+midBlue = #27495F
+grey = #666666
+
+;------;
+; BARS ;
+;------;
+
+[bars/shared]
+width = 100%
+height = 25
+override-redirect = true
+wm-restack = bspwm
+fixed-center = true
+enable-ipc = true
+background = ${colors.background}
+foreground = ${colors.foreground}
+padding = 2
+line-size = 2
+font-0 = "FiraSans:style=bold:size=10;0"
+font-1 = "Symbols Nerd Font:style=2048-em;1"
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+
+
+[bar/polyleft]
+monitor = ${env:MONITOR:DisplayPort-2}
+inherit = bars/shared
+modules-left = previous playpause next spotify
+modules-right = bspwm 
+
+
+
+[bar/polyright]
+monitor = ${env:MONITOR:HDMI-A-0}
+inherit = bars/shared
+tray-position = right
+modules-left = bspwm
+modules-right = upd-arch cpu memory lan2 alsa date2 powermenu
+
+
+
+;---------;
+; MODULES ;
+;---------;
+
+[module/bspwm]
+type = internal/bspwm
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-9 = 10;
+label-focused = %icon% 
+label-focused-foreground = ${colors.pink}
+label-focused-padding = 1
+label-occupied = %icon%
+label-occupied-foreground = ${colors.foreground}
+label-occupied-padding = 1
+label-empty = %icon%
+label-empty-foreground = ${colors.grey}
+label-empty-padding = 1
+
+
+
+[module/date]
+type = internal/date
+interval = 5
+;date = %m/%e
+date = %e
+time = %I:%M
+format-prefix =
+format-prefix-foreground = ${colors.foreground}
+format-padding = 3
+; %date%   
+label = " %time%"
+
+[module/date2]
+type = custom/script
+exec = .config/polybar/poly-scripts/date.sh
+interval = 1
+click-left = alacritty -e calcurse &
+format-padding = 3
+
+[module/alsa]
+type = internal/alsa
+format-volume = <ramp-volume> <label-volume>
+format-volume-padding = 3
+format-muted-padding = 3
+label-volume = %percentage%
+label-muted = 婢
+label-muted-foreground = ${colors.pink}
+ramp-volume-0 = 奄
+ramp-volume-1 = 奔
+ramp-volume-2 = 墳
+
+
+
+[module/powermenu]
+type = custom/menu
+expand-right = true
+format-spacing = 1
+format-padding = 1
+label-open = 
+label-open-foreground = ${colors.pink}
+label-close = 
+label-close-foreground = ${colors.pink}
+label-separator = |
+label-separator-foreground = ${colors.foreground}
+menu-0-0 = 
+menu-0-0-exec = reboot
+menu-0-1 = 
+menu-0-1-exec = poweroff
+
+
+
+[module/upd-arch]
+type = custom/script
+exec = ~/.config/polybar/poly-scripts/updates-arch.sh
+interval = 600
+format-padding = 3
+
+
+
+[module/lan]
+type = internal/network
+interface = enp24s0
+interval = 3.0
+format-connected = <label-connected>
+format-connected-padding = 3
+format-disconnected = <label-disconnected>
+label-connected = 
+label-connected-foreground = ${colors.foreground}
+label-disconnected = ""
+label-disconnected-foreground = ${colors.foreground}
+
+[module/lan2]
+type = custom/script
+interval = 1.0
+exec = ~/.config/polybar/poly-scripts/internet_status.sh
+format-padding = 3
+click-left = "expressvpn connect"
+click-middle = nm-connection-editor &
+click-right = "expressvpn disconnect"
+
+
+[module/cpu]
+type = internal/cpu
+interval = 1
+format = <label>
+format-padding = 3
+label =  %percentage%%
+
+
+
+[module/memory]
+type = internal/memory
+interval = 3
+format = <label> 
+format-padding = 3
+; Available tokens: %percentage_used% (default), %gb_used%
+label =  %gb_used%
+
+
+
+[module/previous]
+type = custom/script
+interval = 86400
+format = <label>
+format-padding = 3
+;
+exec = echo  ""
+;exec-if = "pgrep spotify"
+click-left = "playerctl previous"
+;click-left = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
+
+[module/next]
+type = custom/script
+interval = 86400
+format = <label>
+format-padding = 3
+;
+exec = echo ""
+;exec-if = "pgrep spotify"
+click-left = "playerctl next"
+;click-left = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
+
+[module/playpause]
+type = custom/script
+interval = 86400
+format = <label>
+format-padding = 3
+format-foreground = ${colors.pink}
+exec = echo ""
+;exec-if = "pgrep spotify"
+click-left = "playerctl play-pause"
+;click-left = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
+
+[module/spotify]
+type = custom/script
+interval = 1
+format-prefix = " "
+format = <label>
+exec = python ~/.config/polybar/poly-scripts/spotify_status.py -f '{play_pause} {artist} - {song}' -p ', '
+
+
+
+
+
+[settings]
+screenchange-reload = true
+pseudo-transparency = true
+
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+wm-restack = bspwm
+
+; vim:ft=dosini
