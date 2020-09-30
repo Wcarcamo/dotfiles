@@ -35,7 +35,7 @@ cursor-scroll = ns-resize
 [bar/polyleft]
 monitor = ${env:MONITOR:DisplayPort-2}
 inherit = bars/shared
-modules-left = previous playpause next spotify
+modules-left = openweather spotify xwindow
 modules-right = bspwm 
 
 
@@ -45,7 +45,7 @@ monitor = ${env:MONITOR:HDMI-A-0}
 inherit = bars/shared
 tray-position = right
 modules-left = bspwm
-modules-right = upd-arch cpu memory lan2 alsa date2 powermenu
+modules-right = upd-arch cpu memory lan2 alsa date powermenu
 
 
 
@@ -81,20 +81,24 @@ label-empty-padding = 1
 type = internal/date
 interval = 5
 ;date = %m/%e
-date = %e
+date = %b %e
 time = %I:%M
 format-prefix =
 format-prefix-foreground = ${colors.foreground}
 format-padding = 3
 ; %date%   
-label = " %time%"
-
-[module/date2]
-type = custom/script
-exec = .config/polybar/poly-scripts/date.sh
-interval = 1
+label = " %date%     %time%"
 click-left = alacritty -e calcurse &
-format-padding = 3
+
+
+
+
+[module/xwindow]
+type = internal/xwindow
+label =  %title:0:30:...%
+format-padding = 3 
+
+
 
 [module/alsa]
 type = internal/alsa
@@ -177,49 +181,23 @@ label =  %gb_used%
 
 
 
-[module/previous]
-type = custom/script
-interval = 86400
-format = <label>
-format-padding = 3
-;
-exec = echo  ""
-;exec-if = "pgrep spotify"
-click-left = "playerctl previous"
-;click-left = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
-
-[module/next]
-type = custom/script
-interval = 86400
-format = <label>
-format-padding = 3
-;
-exec = echo ""
-;exec-if = "pgrep spotify"
-click-left = "playerctl next"
-;click-left = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
-
-[module/playpause]
-type = custom/script
-interval = 86400
-format = <label>
-format-padding = 3
-format-foreground = ${colors.pink}
-exec = echo ""
-;exec-if = "pgrep spotify"
-click-left = "playerctl play-pause"
-;click-left = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
-
 [module/spotify]
 type = custom/script
 interval = 1
 format-prefix = " "
+format-padding = 3
 format = <label>
-exec = python ~/.config/polybar/poly-scripts/spotify_status.py -f '{play_pause} {artist} - {song}' -p ', '
+exec = python ~/.config/polybar/poly-scripts/spotify_status.py -f '{play_pause} {artist} - {song}' -p ', '
 
 
 
 
+[module/openweather]
+type = custom/script
+exec = ~/.config/polybar/poly-scripts/openweather.sh
+interval = 900 
+label-font = 2
+format-padding = 3
 
 [settings]
 screenchange-reload = true

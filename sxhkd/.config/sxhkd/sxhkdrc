@@ -7,7 +7,7 @@ super + Return
 	alacritty
 
 # program launcher
-super + @space
+super + alt + space
 	dmenu_run
 
 # make sxhkd reload its configuration files:
@@ -29,6 +29,16 @@ super + alt + {q,r}
 # Restart polybar
 super + alt + p
 	polybar-msg cmd restart
+
+# Audio
+super + alt + Left
+	playerctl previous
+
+super + alt + Right
+	playerctl next
+
+super + space
+	playerctl play-pause
 
 # close and kill
 super + {_,shift + }w

@@ -5,11 +5,11 @@ vpn=$(nmcli connection | grep -c 'tun0')
 
 if [ $status = "connected" ] && [ $vpn -eq 1 ]
 then
-	echo " "
+	echo "旅"
 elif [ $status = "connected" ]
 then
-	echo ""
+	echo "ﯱ"
 else
-	echo "睊"
+	echo ""
 fi
 

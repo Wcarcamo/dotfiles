@@ -1,4 +1,6 @@
 let mapleader=" "
+nnoremap <leader>q :wq<CR>
+nnoremap <leader>w :w<CR>
 
 " Set Preferences
 syntax on
@@ -6,6 +8,8 @@ set relativenumber
 set ignorecase
 set smartcase
 set autoindent
+set mouse=a
+" set termguicolors
 
 " System clipboard
 set clipboard+=unnamedplus
