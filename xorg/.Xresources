@@ -9,7 +9,8 @@ URxvt.keysym.C-0:resize-font:reset
 ! special
 *.foreground:   #ffffff
 *.background:   #000000
-*.cursorColor:  #d8dee9
+! *.cursorColor: #D8DEE9
+*.cursorColor:  #000000
 
 ! black
 *.color0:       #b4b4b4

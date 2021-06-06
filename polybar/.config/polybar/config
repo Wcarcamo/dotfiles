@@ -3,12 +3,15 @@
 ;--------;
 [colors]
 background = #00000000
+;foreground is white
 foreground = #FFFFFF
+black = #000000
 alert = #bd2c40
 pink = #E0AFCF
 skyBlue = #AFCFE0
 midBlue = #27495F
 grey = #666666
+blue = #4974A5
 
 ;------;
 ; BARS ;
@@ -25,7 +28,8 @@ background = ${colors.background}
 foreground = ${colors.foreground}
 padding = 2
 line-size = 2
-font-0 = "FiraSans:style=bold:size=10;0"
+;font-0 = "FiraSans:style=bold:size=10;0"
+font-0 = "FiraSans:size=10;0"
 font-1 = "Symbols Nerd Font:style=2048-em;1"
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -33,18 +37,20 @@ cursor-scroll = ns-resize
 
 
 [bar/polyleft]
+;monitor = ${env:MONITOR:HDMI-A-0}
 monitor = ${env:MONITOR:DisplayPort-2}
 inherit = bars/shared
 modules-left = openweather spotify xwindow
 modules-right = bspwm 
-
+; spotify - is giving off a weird message: "Traceback (most recent call last):"
 
 
 [bar/polyright]
 monitor = ${env:MONITOR:HDMI-A-0}
+;monitor = ${env:MONITOR:DisplayPort-2}
 inherit = bars/shared
 tray-position = right
-modules-left = bspwm
+modules-left = bspwm 
 modules-right = upd-arch cpu memory lan2 alsa date powermenu
 
 
@@ -66,7 +72,7 @@ ws-icon-7 = 8;
 ws-icon-8 = 9;
 ws-icon-9 = 10;
 label-focused = %icon% 
-label-focused-foreground = ${colors.pink}
+label-focused-foreground = ${colors.blue}
 label-focused-padding = 1
 label-occupied = %icon%
 label-occupied-foreground = ${colors.foreground}
@@ -84,7 +90,6 @@ interval = 5
 date = %b %e
 time = %I:%M
 format-prefix =
-format-prefix-foreground = ${colors.foreground}
 format-padding = 3
 ; %date%   
 label = " %date%     %time%"
@@ -107,7 +112,7 @@ format-volume-padding = 3
 format-muted-padding = 3
 label-volume = %percentage%
 label-muted = 婢
-label-muted-foreground = ${colors.pink}
+label-muted-foreground = ${colors.blue}
 ramp-volume-0 = 奄
 ramp-volume-1 = 奔
 ramp-volume-2 = 墳
@@ -120,11 +125,11 @@ expand-right = true
 format-spacing = 1
 format-padding = 1
 label-open = 
-label-open-foreground = ${colors.pink}
+label-open-foreground = ${colors.blue}
 label-close = 
-label-close-foreground = ${colors.pink}
+label-close-foreground = ${colors.blue}
 label-separator = |
-label-separator-foreground = ${colors.foreground}
+label-separator-foreground = ${colors.grey}
 menu-0-0 = 
 menu-0-0-exec = reboot
 menu-0-1 = 

@@ -1,6 +1,7 @@
 #!/bin/sh
 
-~/.fehbg & 
+~/scripts/monitor_layout.sh &
+~/scripts/.fehbg & 
 sxhkd &
 dunst &
 xsetroot -cursor_name left_ptr

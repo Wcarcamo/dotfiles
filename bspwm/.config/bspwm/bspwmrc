@@ -1,7 +1,7 @@
 #! /bin/sh
 
 ###---Monitors---###
-bspc monitor DisplayPort-2 -d 1 2 3 4 5
+bspc monitor DisplayPort-2 -d 1 2 3 4 5 
 bspc monitor HDMI-A-0 -d 6 7 8 9 10
 
 ###---Global Settings---###
@@ -33,4 +33,5 @@ bspc rule -a Spotify desktop=^5
 
 sxhkd &
 $HOME/.config/polybar/launch.sh &
+pgrep bspswallow || bspswallow &
 #spotify &
