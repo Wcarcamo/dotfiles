@@ -1,0 +1,207 @@
+// =============================================================================
+//
+// Waybar configuration
+//
+// Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
+//
+// =============================================================================
+
+[
+    // -------------------------------------------------------------------------
+    // BAR LEFT - DP-3
+    // -------------------------------------------------------------------------  
+    {
+        "layer": "top",
+        "output": "DP-3",
+        "modules-left": [
+            "custom/powermenu",
+            "custom/weather",
+            "custom/spotify"
+        ],
+        "modules-right": [
+            "sway/window",
+            "sway/workspaces"
+        ],
+        
+        // -------------------------------------------------------------------------
+        // Modules
+        // -------------------------------------------------------------------------
+
+        "custom/powermenu": {
+            "format": "⏻",
+            "on-click": "wlogout -b 2 -p layer-shell",
+            "tooltip": false
+        },
+
+        "custom/weather": {
+            "format": "{}",
+            "tooltip": true,
+            "interval": 3600,
+            "exec": "$HOME/.config/waybar/custom/waybar-wttr.py",
+            "return-type": "json"
+        },
+
+        "custom/spotify": {
+            "format": "{}",
+            "interval": 5,
+            "exec": "python $HOME/.config/waybar/custom/spotify_status.py -f '{play_pause} {artist} - {song}' -p ', '",
+            "on-click": "playerctl play-pause"
+        },
+
+        "sway/window": {
+            "format": "{}",
+            "max-length": 120
+        },
+
+        "sway/workspaces": {
+            "all-outputs": false,
+            "disable-scroll": true,
+            "format": "{name}"
+            //"persistent_workspaces": {
+            //    "1": ["DP-3"],
+            //    "2": ["DP-3"],
+            //    "3": ["DP-3"],
+            //    "4": ["DP-3"],
+            //    "5": ["DP-3"]
+            //}
+        },
+    }, 
+    
+    // -------------------------------------------------------------------------
+    // BAR RIGHT - HDMI-A-1
+    // -------------------------------------------------------------------------      
+    {
+        "layer": "top",
+        "output": "HDMI-A-1",
+        "modules-left": [
+            "sway/workspaces",
+            "sway/window"
+        ],
+        "modules-right": [
+            "idle_inhibitor",            
+            "custom/updates",
+            "custom/vpn",
+            "network",
+            "cpu",
+            "memory",
+            "temperature",
+            "pulseaudio",
+            "clock"
+        ],
+        
+        // -------------------------------------------------------------------------
+        // Modules
+        // -------------------------------------------------------------------------
+
+        "sway/window": {
+            "format": "{}",
+            "max-length": 120
+        },
+
+        "sway/workspaces": {
+            "all-outputs": false,
+            "disable-scroll": true,
+            "format": "{name}"
+            //"persistent_workspaces": {
+            //    "6": ["HDMI-A-1"],
+            //    "7": ["HDMI-A-1"],
+            //    "8": ["HDMI-A-1"],
+            //    "9": ["HDMI-A-1"],
+            //    "10": ["HDMI-A-1"]
+            //}
+        },
+
+        "custom/updates": {
+            "format": "{}",
+            "interval": 3600,
+            "exec": "$HOME/.config/waybar/custom/updates.sh"
+        },
+
+        "idle_inhibitor": {
+            "format": "{icon}",
+            "format-icons": {
+                "activated": "󰒳",
+                "deactivated": "󰒲"
+            }
+        },
+        
+        "custom/vpn": {
+            "format": "",
+            "exec": "echo '{\"class\": \"connected\"}'",
+            "exec-if": "test -d /proc/sys/net/ipv4/conf/tun0",
+            "return-type": "json",
+            "interval": 5,
+            "tooltip": false
+        },
+
+        "network": {
+            "interval": 5,
+            "format-wifi": "󰖩 {essid} ({signalStrength}%)", // Icon: wifi
+            "format-ethernet": "󰈀", // Icon: ethernet
+            "format-disconnected": "󱘖",
+            "tooltip-format": "{ipaddr} - {ifname}:  {bandwidthUpBits}  {bandwidthDownBits}",
+            "on-click": "swaymsg exec \\$nmtui"
+        },
+
+        "cpu": {
+            "interval": 5,
+            "format": "󰘚{usage}%", // Icon: microchip
+            "states": {
+                "warning": 70,
+                "critical": 90
+            },
+            "on-click": "swaymsg exec \\$process"
+        },
+
+        "memory": {
+            "interval": 5,
+            "format": "󰍛{}%", // Icon: memory
+            "states": {
+                "warning": 70,
+                "critical": 90
+            },
+            "on-click": "swaymsg exec \\$process"
+        },
+
+        "temperature": {
+            "thermal-zone": 0,
+            "critical-threshold": 90,
+            "interval": 5,
+            "format": "{icon}{temperatureC}°C",
+            "format-icons": [
+                "󱃃",
+                "󰔏", // Icon: temperature ok
+                "󰔐"  // Icon: temperature not ok
+            ],
+            "tooltip": true,
+            "on-click": "swaymsg exec \\$sensors"
+        },
+
+        "pulseaudio": {
+            //"scroll-step": 1,
+            "format": "{icon}{volume}%",
+            "format-bluetooth": "{icon}󰂰 {volume}%",
+            "format-muted": "󰖁",
+            "format-icons": {
+                "headphones": "󰋋",
+                "handsfree": "󱋿",
+                "headset": "󰋎",
+                "phone": "󰏲",
+                "portable": "󰄝",
+                "car": "󰄋",
+                "default": ["󰕿", "󰖀", "󰕾"]
+            },
+            "on-click": "swaymsg exec \\$pulseaudio"
+        },
+
+        "clock": {
+            "interval": 60,
+            "format": "{:%b %e %I:%M}",
+            "tooltip": true,
+            "tooltip-format": "<big>{:%B %Y}</big>\n<tt>{calendar}</tt>",
+            "on-click": "swaymsg exec \\$calendar"
+        }
+    }
+]
+
+

@@ -1,0 +1,254 @@
+# add your customizations here
+# 
+# they will be appended to the configuration
+
+# Default config for sway
+#
+# Copy this to ~/.config/sway/config and edit it to your liking.
+#
+# Read `man 5 sway` for a complete reference.
+
+##################################################################### 
+# VARIABLES
+#####################################################################
+# SUPER
+set $mod Mod4
+
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+
+# Terminal
+set $term alacritty
+set $term_float $term float
+set $term_float_portrait $term float_portrait
+
+# Launcher
+set $menu wofi --show 'drun,run' -I --exec-search --prompt "Run Command" --term $term | xargs swaymsg exec --
+
+# Lockscreen
+set $locking swaylock --daemonize --config $theme/swaylock
+
+# Idle
+set $idle swayidle -w \
+    timeout 240 'light -G > /tmp/brightness && light -S 10' resume 'light -S $([ -f /tmp/brightness ] && cat /tmp/brightness || echo 100%)' \
+    timeout 300 'exec $locking' \
+    timeout 600 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"' \
+    before-sleep 'exec $locking'
+
+# puseaudio
+set $pulseaudio $term --command pulsemixer
+
+# Calender
+set $calendar $term --command khal interactive
+
+# htop
+set $process $term --command htop
+
+# nmtui
+set $nmtui $term --command nmtui
+
+# sensors
+set $sensors $term --command watch sensors
+
+##################################################################### 
+# BUG - GTK+ applications: See=https://github.com/swaywm/sway/wiki#gtk-applications-take-20-seconds-to-start
+#####################################################################
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+
+
+##################################################################### 
+# DISPLAY
+#####################################################################
+
+# Monitor Layout
+output DP-3 {
+	mode 1920x1080@144Hz
+	pos 0 0
+}
+
+output HDMI-A-1 {
+	mode 1920x1080
+	pos 1920 0
+	transform 90
+}
+
+# Wallpaper
+#output * bg ~/.config/wallpapers/icons_black.png tile
+output * bg ~/.config/wallpapers/icons_dark_maroon.png tile
+
+# Remove Title Bars
+default_border pixel 2
+#default_floating_border pixel 2
+
+# Set Gaps
+gaps inner 10
+gaps outer 5
+
+# Borders
+#-------------------Border------Background--Text---
+client.focused      #ffffff     #ffffff     #000000
+client.unfocused    #333333     #222222     #888888
+
+# Persistent Workspaces
+workspace 1 output DP-3
+workspace 2 output DP-3
+workspace 3 output DP-3
+workspace 4 output DP-3
+workspace 5 output DP-3
+workspace 6 output HDMI-A-1
+workspace 7 output HDMI-A-1
+workspace 8 output HDMI-A-1
+workspace 9 output HDMI-A-1
+workspace 10 output HDMI-A-1
+
+# GTK
+set $gnome-schema org.gnome.desktop.interface
+
+exec_always {
+    gsettings set $gnome-schema gtk-theme 'Sweet-mars'
+    gsettings set $gnome-schema icon-theme 'Sweet-Red'
+    gsettings set org.gnome.desktop.wm.preferences 'Sweet-mars'
+}
+
+for_window [class="Spotify"] opacity .8
+for_window [app_id="Alacritty"] opacity .8
+
+##################################################################### 
+# KEY BINDINGS
+#####################################################################
+# Basics:
+    # Start a terminal
+    bindsym $mod+Return exec $term
+
+    # Kill focused window
+    bindsym $mod+q kill
+
+    # Start your launcher
+    bindsym $mod+space exec $menu
+
+    # Drag floating windows by holding down $mod and left mouse button.
+    # Resize them with right mouse button + $mod.
+    # Despite the name, also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+    floating_modifier $mod normal
+
+    # Reload the configuration file
+    bindsym $mod+Shift+c reload
+
+    # Exit sway (logs you out of your Wayland session)
+    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+
+# Applications:
+    # Brave
+    bindsym $mod+b exec brave
+
+    # VSCode
+    bindsym $mod+v exec code
+
+    # Spotify
+    #bindsym $mod+s exec brave open.spotify.com
+    bindsym $mod+s exec spotify
+
+# Music:
+    bindsym $mod+alt+Down exec playerctl play-pause
+    bindsym $mod+alt+Left exec playerctl previous
+    bindsym $mod+alt+Right exec playerctl next
+
+# Moving around:
+    # Move your focus around
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus right
+    # Or use $mod+[up|down|left|right]
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
+
+    # Move the focused window with the same, but add Shift
+    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$down move down
+    bindsym $mod+Shift+$up move up
+    bindsym $mod+Shift+$right move right
+    # Ditto, with arrow keys
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
+
+# Workspaces:
+    # Switch to workspace
+    bindsym $mod+1 workspace number 1
+    bindsym $mod+2 workspace number 2
+    bindsym $mod+3 workspace number 3
+    bindsym $mod+4 workspace number 4
+    bindsym $mod+5 workspace number 5
+    bindsym $mod+6 workspace number 6
+    bindsym $mod+7 workspace number 7
+    bindsym $mod+8 workspace number 8
+    bindsym $mod+9 workspace number 9
+    bindsym $mod+0 workspace number 10
+    # Move focused container to workspace
+    bindsym $mod+Shift+1 move container to workspace number 1
+    bindsym $mod+Shift+2 move container to workspace number 2
+    bindsym $mod+Shift+3 move container to workspace number 3
+    bindsym $mod+Shift+4 move container to workspace number 4
+    bindsym $mod+Shift+5 move container to workspace number 5
+    bindsym $mod+Shift+6 move container to workspace number 6
+    bindsym $mod+Shift+7 move container to workspace number 7
+    bindsym $mod+Shift+8 move container to workspace number 8
+    bindsym $mod+Shift+9 move container to workspace number 9
+    bindsym $mod+Shift+0 move container to workspace number 10
+
+# Layout stuff:
+    # Horizontal Split
+    bindsym $mod+alt+b splith
+	# Vertical Split
+    bindsym $mod+alt+v splitv
+
+# Resizing containers:
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Numlock
+input * xkb_numlock enable
+
+##################################################################### 
+# WAYBAR
+#####################################################################
+bar {
+    swaybar_command waybar
+}
+
+##################################################################### 
+# AUTOSTART APPLICATIONS
+#####################################################################
+#assign [class="Spotify"] workspace 9
+#Vexec Spotify

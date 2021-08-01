@@ -1,2 +1,22 @@
 # dotfiles
-dotfiles for arch linux
+Arch Linux Dot Files
+
+There are two different arch builds
+1. xorg - Bspwm
+2. wayland - Sway
+
+# Instructions
+
+## Navigate To Directory
+
+```
+$ cd /dotfiles/[xorg, wayland]
+```
+
+## Stow A Package/Directory
+
+```
+$ stow -S feh -t $HOME
+```
+
+I use `-t` flag to set my target directory because the parent directory (default) of my dotfiles is not my home directory.
