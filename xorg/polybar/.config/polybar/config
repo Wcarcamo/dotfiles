@@ -2,56 +2,50 @@
 ; COLORS ;
 ;--------;
 [colors]
-background = #00000000
-;foreground is white
-foreground = #FFFFFF
+transparent = #99000000
+white = #FFFFFF
 black = #000000
-alert = #bd2c40
-pink = #E0AFCF
-skyBlue = #AFCFE0
-midBlue = #27495F
+alert = #E60000
 grey = #666666
-blue = #4974A5
+green = #008000
 
 ;------;
 ; BARS ;
 ;------;
 
 [bars/shared]
+override-redirect = false
 width = 100%
-height = 25
-override-redirect = true
+;width = 75%
+;offset-x = 12.5%
+;radius = 8.0
 wm-restack = bspwm
 fixed-center = true
 enable-ipc = true
-background = ${colors.background}
-foreground = ${colors.foreground}
-padding = 2
+background = ${colors.transparent}
+foreground = ${colors.white}
 line-size = 2
-;font-0 = "FiraSans:style=bold:size=10;0"
-font-0 = "FiraSans:size=10;0"
-font-1 = "Symbols Nerd Font:style=2048-em;1"
+font-0 = "Hack Nerd Font:style=Bold:size=13;3"
+font-1 = "Hack Nerd Font:style=Bold:size=8;0"
 cursor-click = pointer
 cursor-scroll = ns-resize
 
 
 
 [bar/polyleft]
-;monitor = ${env:MONITOR:HDMI-A-0}
-monitor = ${env:MONITOR:DisplayPort-2}
-inherit = bars/shared
-modules-left = openweather spotify xwindow
-modules-right = bspwm 
-; spotify - is giving off a weird message: "Traceback (most recent call last):"
-
-
-[bar/polyright]
-monitor = ${env:MONITOR:HDMI-A-0}
-;monitor = ${env:MONITOR:DisplayPort-2}
+monitor = ${env:MONITOR:eDP-1}
 inherit = bars/shared
 tray-position = right
-modules-left = bspwm 
-modules-right = upd-arch cpu memory lan2 alsa date powermenu
+modules-left = powermenu cpu memory expressvpn upd-arch
+modules-center = bspwm
+modules-right = alsa battery date
+
+[bar/polyright]
+monitor = ${env:MONITOR:HDMI-1}
+inherit = bars/shared
+modules-left = openweather spotify 
+modules-center = bspwm
+modules-right = date
 
 
 
@@ -61,24 +55,16 @@ modules-right = upd-arch cpu memory lan2 alsa date powermenu
 
 [module/bspwm]
 type = internal/bspwm
-ws-icon-0 = 1;
-ws-icon-1 = 2;
-ws-icon-2 = 3;
-ws-icon-3 = 4;
-ws-icon-4 = 5;
-ws-icon-5 = 6;
-ws-icon-6 = 7;
-ws-icon-7 = 8;
-ws-icon-8 = 9;
-ws-icon-9 = 10;
-label-focused = %icon% 
-label-focused-foreground = ${colors.blue}
+label-focused = %name%
+label-focused-foreground = ${colors.black}
+label-focused-background = ${colors.white}
 label-focused-padding = 1
-label-occupied = %icon%
-label-occupied-foreground = ${colors.foreground}
+label-occupied = %name%
+label-occupied-foreground = ${colors.white}
+;label-occupied-underline = ${colors.white}
 label-occupied-padding = 1
-label-empty = %icon%
-label-empty-foreground = ${colors.grey}
+label-empty = %{T2}%{T-}
+label-empty-foreground = ${colors.white}
 label-empty-padding = 1
 
 
@@ -87,32 +73,64 @@ label-empty-padding = 1
 type = internal/date
 interval = 5
 ;date = %m/%e
-date = %b %e
+;date = %b %e
+date = %e
 time = %I:%M
 format-prefix =
-format-padding = 3
-; %date%   
-label = " %date%     %time%"
-click-left = alacritty -e calcurse &
+format-padding = 1
+; %date%    
+label = %time%
+;click-left = alacritty -e calcurse &
 
 
+
+[module/battery]
+type = internal/battery
+battery = BAT1
+poll-interval = 2
+full-at = 99
+format-charging = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = <label-full>
+label-charging = %percentage%
+label-discharging = %percentage%
+label-full = " %percentage%"
+label-full-foreground = ${colors.green}
+format-padding = 1
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate = 750
+animation-charging-foreground = ${colors.green}
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-5 = 
+ramp-capacity-6 = 
+ramp-capacity-7 = 
+ramp-capacity-0-foreground = ${colors.alert}
+;ramp-capacity-1-foreground = ${colors.alert}
 
 
 [module/xwindow]
 type = internal/xwindow
 label =  %title:0:30:...%
-format-padding = 3 
+format-padding = 1 
 
 
 
 [module/alsa]
 type = internal/alsa
 format-volume = <ramp-volume> <label-volume>
-format-volume-padding = 3
-format-muted-padding = 3
+format-volume-padding = 1
+format-muted-padding = 1
 label-volume = %percentage%
-label-muted = 婢
-label-muted-foreground = ${colors.blue}
+label-muted = 婢 %percentage%
+label-muted-foreground = ${colors.alert}
 ramp-volume-0 = 奄
 ramp-volume-1 = 奔
 ramp-volume-2 = 墳
@@ -121,19 +139,21 @@ ramp-volume-2 = 墳
 
 [module/powermenu]
 type = custom/menu
-expand-right = true
+expand-right = false
 format-spacing = 1
-format-padding = 1
-label-open = 
-label-open-foreground = ${colors.blue}
+format-padding = 2
+label-open =  
+label-open-foreground = ${colors.green}
 label-close = 
-label-close-foreground = ${colors.blue}
+label-close-foreground = ${colors.alert}
 label-separator = |
 label-separator-foreground = ${colors.grey}
-menu-0-0 = 
-menu-0-0-exec = reboot
-menu-0-1 = 
-menu-0-1-exec = poweroff
+menu-0-0 = 
+menu-0-0-exec = poweroff
+menu-0-0-foreground = ${colors.green}
+menu-0-1 = ﰇ
+menu-0-1-exec = reboot
+menu-0-1-foreground = ${colors.green}
 
 
 
@@ -141,29 +161,28 @@ menu-0-1-exec = poweroff
 type = custom/script
 exec = ~/.config/polybar/poly-scripts/updates-arch.sh
 interval = 600
-format-padding = 3
+format-padding = 1
 
 
 
 [module/lan]
 type = internal/network
-interface = enp24s0
-interval = 3.0
+interface = enp9s0
+interval = 1.0
 format-connected = <label-connected>
-format-connected-padding = 3
+format-connected-padding = 1
 format-disconnected = <label-disconnected>
-label-connected = 
-label-connected-foreground = ${colors.foreground}
+label-connected = %upspeed% %downspeed%
+label-connected-foreground = ${colors.white}
 label-disconnected = ""
-label-disconnected-foreground = ${colors.foreground}
+label-disconnected-foreground = ${colors.white}
 
-[module/lan2]
+[module/expressvpn]
 type = custom/script
 interval = 1.0
-exec = ~/.config/polybar/poly-scripts/internet_status.sh
-format-padding = 3
+exec = ~/.config/polybar/poly-scripts/expressvpn.sh
+format-padding = 1
 click-left = "expressvpn connect"
-click-middle = nm-connection-editor &
 click-right = "expressvpn disconnect"
 
 
@@ -171,7 +190,7 @@ click-right = "expressvpn disconnect"
 type = internal/cpu
 interval = 1
 format = <label>
-format-padding = 3
+format-padding = 1
 label =  %percentage%%
 
 
@@ -180,17 +199,16 @@ label =  %percentage%%
 type = internal/memory
 interval = 3
 format = <label> 
-format-padding = 3
+format-padding = 1
 ; Available tokens: %percentage_used% (default), %gb_used%
-label =  %gb_used%
+label =  %gb_used:0:4%
 
 
 
 [module/spotify]
 type = custom/script
 interval = 1
-format-prefix = " "
-format-padding = 3
+format-padding = 1
 format = <label>
 exec = python ~/.config/polybar/poly-scripts/spotify_status.py -f '{play_pause} {artist} - {song}' -p ', '
 
@@ -201,8 +219,8 @@ exec = python ~/.config/polybar/poly-scripts/spotify_status.py -f '{play_pause} 
 type = custom/script
 exec = ~/.config/polybar/poly-scripts/openweather.sh
 interval = 900 
-label-font = 2
-format-padding = 3
+;label-font = 2
+format-padding = 1
 
 [settings]
 screenchange-reload = true
@@ -211,6 +229,5 @@ pseudo-transparency = true
 [global/wm]
 margin-top = 0
 margin-bottom = 0
-wm-restack = bspwm
 
 ; vim:ft=dosini

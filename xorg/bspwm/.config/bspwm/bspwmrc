@@ -1,37 +1,34 @@
 #! /bin/sh
 
+pgrep -x sxhkd > /dev/null || sxhkd &
+
 ###---Monitors---###
-bspc monitor DisplayPort-2 -d 1 2 3 4 5 
-bspc monitor HDMI-A-0 -d 6 7 8 9 10
+bspc monitor eDP-1 -d 6 7 8 9 10
+bspc monitor HDMI-1 -d 1 2 3 4 5
 
 ###---Global Settings---###
-bspc config top_padding 15
+bspc config top_padding 25
 bspc config bottom_padding 0
 bspc config left_padding 0
 bspc config right_padding 0
-bspc config border_width         2
-bspc config window_gap          10
+bspc config border_width 2
+bspc config window_gap 5
 
-# Focused - Pink
-# Normal - skyblue
-#bspc config normal_border_color "#1b182c"
-#bspc config active_border_color "#1b182c"
-#bspc config focused_border_color "#ffc0cb"
-bspc config normal_border_color "#AFCFE0"
-bspc config active_border_color "#AFCFE0"
-bspc config focused_border_color "#E0AFCF"
+bspc config normal_border_color "#000000"
+bspc config active_border_color "#000000"
+bspc config focused_border_color "#FFFFFF"
 
-bspc config split_ratio          0.52
+bspc config split_ratio          0.50
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
-bspc config focus_follows_pointer true
+bspc config focus_follows_pointer   true
+bspc config pointer_follows_monitor true
 
-bspc rule -a Spotify desktop=^5
+#bspc rule -a Spotify desktop=^5
 
 ###---AutoStart---###
 
-sxhkd &
 $HOME/.config/polybar/launch.sh &
 pgrep bspswallow || bspswallow &
 #spotify &

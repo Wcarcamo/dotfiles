@@ -7,8 +7,8 @@ super + Return
 	alacritty
 
 # program launcher
-super + alt + space
-	dmenu_run
+super + space
+	rofi -modi run,drun,window -show drun
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -16,7 +16,7 @@ super + Escape
 
 # Will's Launched Apps
 super + {v, b, r, s}
-	{vscodium, brave, rstudio-bin, spotify}
+	{code, brave, rstudio-bin, spotify}
 
 #
 # bspwm hotkeys
@@ -31,13 +31,13 @@ super + alt + p
 	polybar-msg cmd restart
 
 # Audio
-super + alt + Left
+super + Left
 	playerctl previous
 
-super + alt + Right
+super + Right
 	playerctl next
 
-super + space
+super + Down
 	playerctl play-pause
 
 # close and kill
@@ -75,14 +75,9 @@ super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
 # focus or send to the given desktop
-super + {_,shift + }{1,2,3,4,5,6,7,8,9,0}
-	bspc {desktop -f,node -d} '^{1,2,3,4,5,6,7,8,9,10}'
+super + {_,shift + } {1,2,3,4,5,6,7,8,9,0}
+	bspc {desktop -f,node -d} {1,2,3,4,5,6,7,8,9,10}
 
-#super + {_,shift + } {1,2,3,4,5}
-#	bspc {desktop -f,node -d} '^{1,2,3,4,5}'
-
-#super + alt + {_,shift + } {1,2,3,4,5}
-#	bspc {desktop -f,node -d} '^{6,7,8,9,10}'
 
 #
 # move/resize
@@ -97,5 +92,5 @@ super + alt + shift + {h,j,k,l}
 	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
 
 # move a floating window
-super + {Left,Down,Up,Right}
+super + alt + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
