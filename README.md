@@ -5,6 +5,12 @@ There are two different arch builds
 1. xorg - Bspwm
 2. wayland - Sway
 
+# Additional Packages to Install
+
+```
+$ pacman -S stow trash-cli
+```
+
 # Instructions
 
 ## Navigate To Directory
